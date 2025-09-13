@@ -1,7 +1,7 @@
 {
   "app": {
-    "title": "eBook to Mind Map",
-    "description": "Use AI technology to parse EPUB and PDF eBooks by chapters and generate intelligent summaries"
+    "title": "eBook to Study Tools",
+    "description": "Use AI to analyze EPUB and PDF ebooks by chapter and generate intelligent summaries, quizzes, and flashcards."
   },
   "upload": {
     "title": "File Upload & Configuration",
@@ -48,6 +48,8 @@
     "summaryTitle": "Analysis Results for \"{{title}}\"",
     "chapterMindMapTitle": "Chapter Mind Maps for \"{{title}}\"",
     "wholeMindMapTitle": "Complete Mind Map for \"{{title}}\"",
+    "quizTitle": "Quiz for \"{{title}}\"",
+    "flashcardTitle": "Flashcards for \"{{title}}\"",
     "combinedMindMapTitle": "Chapter Mind Map Integration for \"{{title}}\"",
     "author": "Author: {{author}}",
     "chapterCount": "{{count}} chapters total",
@@ -147,9 +149,12 @@
     "temperature": "Temperature (Optional)",
     "temperatureDescription": "Controls AI response randomness, range 0-2, higher values are more random, recommended 0.7",
     "processingMode": "Processing Mode",
-    "selectProcessingMode": "Select Processing Mode",
-    "summaryMode": "Text Summary Mode",
-    "mindmapMode": "Chapter Mind Map Mode",
+    "selectProcessingMode": "Select a processing mode",
+    "summaryMode": "Summary Mode",
+    "mindmapMode": "Mind Map Mode",
+    "quizMode": "Quiz Mode",
+    "flashcardMode": "Flashcard Mode",
+    "processingModeDescription": "Choose the type of content to generate from your ebook.",
     "combinedMindmapMode": "Whole Book Mind Map Mode",
     "processingModeDescription": "Text summary mode generates chapter text summaries and correlation analysis; Chapter mind map mode creates independent mind maps for each chapter; Whole book mind map mode integrates the entire book content into one complete mind map.",
     "bookType": "Book Type",
@@ -180,14 +185,18 @@
     "outputLanguageDescription": "Control the language of AI-generated content. Auto mode will follow the current interface language."
   },
   "download": {
-    "title": "Download Mind Map",
+    "title": "Download",
     "formats": {
       "png": "Download as PNG",
       "jpeg": "Download as JPEG",
       "svg": "Download as SVG",
       "pdf": "Download as PDF",
       "xmind": "Download as XMind",
-      "json": "Download as JSON"
+      "json": "Download as JSON",
+      "csv": "Download as CSV",
+      "html": "Interactive HTML",
+      "pdf": "Printable PDF",
+      "png": "Download as PNG"
     }
   },
   "viewContent": {
