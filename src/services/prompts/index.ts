@@ -20,3 +20,11 @@ export {
   getChapterMindMapPrompt,
   getMindMapArrowPrompt
 } from './mindmap'
+
+export { 
+  getQuizPrompt 
+} from './quiz'
+
+export { 
+  getFlashcardPrompt 
+} from './flashcard'
