@@ -9,10 +9,55 @@ import { Settings } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useConfigStore, useAIConfig, useProcessingOptions } from '../../stores/configStore'
 import type { SupportedLanguage } from '../../services/prompts/utils'
+import { useConfigStore, useProcessingOptions } from '../../stores/configStore'
 
 interface ConfigDialogProps {
   processing: boolean
   file: File | null
+}
+
+export function ConfigDialog({ processing }: { processing: boolean }) {
+  const { t } = useTranslation()
+  const { processingMode, setProcessingMode } = useProcessingOptions()
+  
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline" size="sm" disabled={processing}>
+          <Settings className="h-4 w-4 mr-2" />
+          {t('config.title')}
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t('config.title')}</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4">
+          {/* ... (AI config) */}
+          <div className="space-y-2">
+            <Label htmlFor="processing-mode">{t('config.processingMode')}</Label>
+            <Select
+              value={processingMode}
+              onValueChange={(value: 'summary' | 'mindmap' | 'quiz' | 'flashcard') => setProcessingMode(value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder={t('config.selectProcessingMode')} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="summary">{t('config.summaryMode')}</SelectItem>
+                <SelectItem value="mindmap">{t('config.mindmapMode')}</SelectItem>
+                <SelectItem value="quiz">{t('config.quizMode')}</SelectItem>
+                <SelectItem value="flashcard">{t('config.flashcardMode')}</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="text-sm text-muted-foreground">
+              {t('config.processingModeDescription')}
+            </p>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
 }
 
 export function ConfigDialog({ processing }: ConfigDialogProps) {
