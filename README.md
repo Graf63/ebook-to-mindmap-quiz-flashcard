@@ -1,270 +1,54 @@
-# 电子书转思维导图
+# eBook to Study Tools
 
-一个基于 AI 技术的智能电子书解析工具，支持将 EPUB 和 PDF 格式的电子书转换为结构化的思维导图和文字总结。
+An intelligent ebook analysis tool based on AI technology, which supports converting EPUB and PDF format ebooks into structured mind maps, quizzes, and flashcards.
 
-## ✨ 功能特性
+## ✨ Features
 
-### 📚 多格式支持
-- **EPUB 文件**：完整支持 EPUB 格式电子书的解析和处理
-- **PDF 文件**：智能解析 PDF 文档，支持基于目录和智能检测的章节提取
+### 📚 Multi-format Support
+- **EPUB Files**: Full support for parsing and processing EPUB format ebooks.
+- **PDF Files**: Intelligent parsing of PDF documents, supporting chapter extraction based on table of contents and smart detection.
 
-### 🤖 AI 驱动的内容处理
-- **多种 AI 服务**：支持 Google Gemini 和 OpenAI GPT 模型
-- **三种处理模式**：
-  - 📝 **文字总结模式**：生成章节总结、分析章节关联、输出全书总结
-  - 🧠 **章节思维导图模式**：为每个章节生成独立的思维导图
-  - 🌐 **整书思维导图模式**：将整本书内容整合为一个完整的思维导图
+### 🤖 AI-driven Content Processing
+- **Multiple AI Services**: Supports Google Gemini and OpenAI GPT models.
+- **Three Processing Modes**:
+  - 📝 **Mind Map Mode**: Generates a mind map for each chapter or for the entire book.
+  - 🧠 **Quiz Mode**: Creates multiple-choice quizzes for each chapter with answers and source locations.
+  - 🌐 **Flashcard Mode**: Generates flashcards with questions/terms and answers, including source locations.
 
-### 🎯 智能章节处理
-- **智能章节检测**：自动识别和提取书籍章节结构
-- **章节筛选**：支持跳过前言、目录、致谢等非核心内容
-- **灵活选择**：用户可自由选择需要处理的章节
-- **子章节支持**：可配置子章节提取深度
+### 🎯 Intelligent Chapter Processing
+- **Smart Chapter Detection**: Automatically identifies and extracts the book's chapter structure.
+- **Chapter Filtering**: Supports skipping non-core content such as forewords, table of contents, and acknowledgments.
+- **Flexible Selection**: Users can freely choose the chapters to be processed.
+- **Sub-chapter Support**: Configurable depth for extracting sub-chapters.
 
-### 💾 高效缓存机制
-- **智能缓存**：自动缓存 AI 处理结果，避免重复计算
-- **缓存管理**：支持按模式清除缓存，节省存储空间
-- **离线查看**：已处理的内容可离线查看
+### 💾 Efficient Caching Mechanism
+- **Smart Caching**: Automatically caches AI processing results to avoid redundant computations.
+- **Cache Management**: Supports clearing the cache by mode to save storage space.
+- **Offline Viewing**: Processed content can be viewed offline.
 
-### 🎨 现代化界面
-- **响应式设计**：适配各种屏幕尺寸
-- **实时进度**：处理过程可视化，实时显示当前步骤
-- **交互式思维导图**：支持缩放、拖拽、节点展开/折叠
-- **内容预览**：支持查看原始章节内容
+### 🎨 Modern Interface
+- **Responsive Design**: Adapts to various screen sizes.
+- **Real-time Progress**: Visualized processing with real-time display of the current step.
+- **Interactive Outputs**:
+    - **Mind Maps**: Supports zooming, dragging, and node expansion/collapse.
+    - **Quizzes**: Interactive questions and answers.
+    - **Flashcards**: Flippable cards for active recall.
+- **Content Preview**: Supports viewing the original chapter content.
+- **Versatile Downloads**: Export mind maps as images, and quizzes/flashcards as interactive HTML, printable PDF, or JSON/CSV data.
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 环境要求
-- Node.js 18+ 
-- pnpm（推荐）或 npm
+### Prerequisites
+- Node.js 18+
+- pnpm (recommended) or npm
 
-### 安装依赖
+### Installation
 ```bash
-# 克隆项目
+# Clone the project
 git clone <repository-url>
-cd ebook-to-mindmap
+cd ebook-to-study-tools
 
-# 安装依赖
+# Install dependencies
 pnpm install
-# 或
+# or
 npm install
-```
-
-### 启动开发服务器
-```bash
-pnpm dev
-# 或
-npm run dev
-```
-
-访问 `http://localhost:5173` 开始使用。
-
-## 📖 使用指南
-
-### 1. 配置 AI 服务
-
-首次使用需要配置 AI 服务：
-
-1. 点击右上角的「配置」按钮
-2. 选择 AI 服务提供商：
-   - **Google Gemini**（推荐）：需要 Gemini API Key
-   - **OpenAI GPT**：需要 OpenAI API Key 和 API 地址
-3. 输入相应的 API Key
-4. 选择模型（可选，使用默认模型即可）
-
-#### 获取 API Key
-
-**Google Gemini API Key**：
-1. 访问 [Google AI Studio](https://aistudio.google.com/)
-2. 登录 Google 账号
-3. 创建新的 API Key
-4. 复制 API Key 到配置中
-
-**OpenAI API Key**：
-1. 访问 [OpenAI Platform](https://platform.openai.com/)
-2. 登录并进入 API Keys 页面
-3. 创建新的 API Key
-4. 复制 API Key 到配置中
-
-### 2. 上传电子书文件
-
-1. 点击「选择 EPUB 或 PDF 文件」按钮
-2. 选择要处理的电子书文件
-3. 支持的格式：`.epub`、`.pdf`
-
-### 3. 配置处理选项
-
-在配置对话框中设置处理参数：
-
-#### 处理模式
-- **文字总结模式**：适合需要文字总结的场景
-- **章节思维导图模式**：为每个章节生成独立思维导图
-- **整书思维导图模式**：生成整本书的统一思维导图
-
-#### 书籍类型
-- **小说类**：适用于小说、故事类书籍
-- **非小说类**：适用于教材、工具书、技术书籍等
-
-#### 高级选项
-- **智能章节检测**：启用后会使用 AI 智能识别章节边界
-- **跳过无关章节**：自动跳过前言、目录、致谢等内容
-- **子章节深度**：设置提取子章节的层级深度（0-3）
-
-### 4. 提取章节
-
-1. 点击「提取章节」按钮
-2. 系统会自动解析文件并提取章节结构
-3. 提取完成后会显示章节列表
-4. 可以选择需要处理的章节（默认全选）
-
-### 5. 开始处理
-
-1. 确认选择的章节
-2. 点击「开始处理」按钮
-3. 系统会显示处理进度和当前步骤
-4. 处理完成后会显示结果
-
-### 6. 查看结果
-
-根据选择的处理模式，可以查看不同类型的结果：
-
-#### 文字总结模式
-- **章节总结**：每个章节的详细总结
-- **章节关联**：分析章节之间的逻辑关系
-- **全书总结**：整本书的核心内容总结
-
-#### 思维导图模式
-- **交互式思维导图**：可缩放、拖拽的思维导图
-- **节点详情**：点击节点查看详细内容
-- **导出功能**：支持导出为图片或其他格式
-
-## 🛠️ 技术架构
-
-### 核心技术栈
-- **前端框架**：React 19 + TypeScript
-- **构建工具**：Vite
-- **样式方案**：Tailwind CSS + shadcn/ui
-- **状态管理**：Zustand
-- **文件解析**：
-  - EPUB：@smoores/epub + epubjs
-  - PDF：pdfjs-dist
-- **思维导图**：mind-elixir
-- **AI 服务**：
-  - Google Gemini：@google/generative-ai
-  - OpenAI：自定义实现
-
-### 项目结构
-```
-src/
-├── components/          # UI 组件
-│   ├── ui/             # 基础 UI 组件
-│   └── project/        # 项目特定组件
-├── services/           # 核心服务
-│   ├── epubProcessor.ts    # EPUB 处理
-│   ├── pdfProcessor.ts     # PDF 处理
-│   ├── geminiService.ts    # AI 服务
-│   ├── cacheService.ts     # 缓存服务
-│   └── prompts/           # AI 提示词
-├── stores/             # 状态管理
-└── hooks/              # 自定义 Hooks
-```
-
-## 🔧 高级功能
-
-### 缓存管理
-
-系统会自动缓存 AI 处理结果，提高效率：
-
-- **自动缓存**：处理结果会自动保存到本地
-- **智能复用**：相同内容不会重复处理
-- **缓存清理**：可按模式清除特定类型的缓存
-- **存储优化**：缓存数据经过压缩，节省存储空间
-
-### 批量处理
-
-- **章节选择**：支持批量选择/取消选择章节
-- **并发处理**：多个章节可并行处理（受 API 限制）
-- **断点续传**：处理中断后可从上次位置继续
-
-### 导出功能
-
-- **思维导图导出**：支持导出为 PNG、SVG 等格式
-- **文字总结导出**：支持导出为 Markdown、TXT 格式
-- **数据备份**：支持导出处理结果数据
-
-## 🎯 使用技巧
-
-### 1. 选择合适的处理模式
-- **学习笔记**：推荐使用「章节思维导图模式」
-- **快速了解**：推荐使用「文字总结模式」
-- **整体把握**：推荐使用「整书思维导图模式」
-
-### 2. 优化处理效果
-- **准确设置书籍类型**：影响 AI 处理策略
-- **合理选择章节**：跳过无关内容可提高质量
-- **启用智能检测**：对于结构复杂的书籍很有帮助
-
-### 3. 提高处理速度
-- **利用缓存**：相同文件的重复处理会很快
-- **分批处理**：可以先处理部分章节查看效果
-- **选择合适的模型**：Gemini Flash 速度更快
-
-## 🚨 注意事项
-
-### API 使用
-- **费用控制**：AI API 调用会产生费用，请合理使用
-- **速率限制**：注意 API 的调用频率限制
-- **网络要求**：需要稳定的网络连接
-
-### 文件格式
-- **EPUB 兼容性**：支持标准 EPUB 2.0/3.0 格式
-- **PDF 限制**：加密或图片型 PDF 可能无法正确解析
-- **文件大小**：建议单个文件不超过 50MB
-
-### 浏览器兼容性
-- **推荐浏览器**：Chrome、Firefox、Safari、Edge 最新版本
-- **存储限制**：缓存依赖浏览器 localStorage，注意存储限制
-
-## 🤝 贡献指南
-
-欢迎提交 Issue 和 Pull Request！
-
-### 开发环境设置
-```bash
-# 安装依赖
-pnpm install
-
-# 启动开发服务器
-pnpm dev
-
-# 代码检查
-pnpm lint
-
-# 构建项目
-pnpm build
-```
-
-### 提交规范
-- 使用清晰的提交信息
-- 遵循现有的代码风格
-- 添加必要的测试
-- 更新相关文档
-
-## 📄 许可证
-
-本项目采用 MIT 许可证。详见 [LICENSE](LICENSE) 文件。
-
-## 🙏 致谢
-
-感谢以下开源项目：
-- [React](https://reactjs.org/)
-- [Vite](https://vitejs.dev/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [shadcn/ui](https://ui.shadcn.com/)
-- [mind-elixir](https://github.com/ssshooter/mind-elixir-core)
-- [PDF.js](https://mozilla.github.io/pdf.js/)
-- [epub.js](https://github.com/futurepress/epub.js/)
-
----
-
-如有问题或建议，欢迎提交 Issue 或联系开发者。
