@@ -1,0 +1,41 @@
+{
+  "app": {
+    "title": "eBook en Outils d'Étude",
+    "description": "Utilisez l'IA pour analyser les ebooks EPUB et PDF par chapitre et générer des résumés intelligents, des quiz et des flashcards."
+  },
+  "upload": {
+    "title": "Téléchargement et Configuration",
+    "selectFile": "Sélectionner un fichier EPUB ou PDF",
+    "selectedFile": "Sélectionné",
+    "noFileSelected": "Aucun fichier sélectionné"
+  },
+  "chapters": {
+    "title": "Sélection des chapitres",
+    "startProcessing": "Démarrer le traitement"
+  },
+  "results": {
+    "summaryTitle": "Résultats de l'analyse pour \"{{title}}\"",
+    "quizTitle": "Quiz pour \"{{title}}\"",
+    "flashcardTitle": "Flashcards pour \"{{title}}\""
+  },
+  "config": {
+    "title": "Configuration",
+    "processingMode": "Mode de traitement",
+    "selectProcessingMode": "Sélectionnez un mode de traitement",
+    "summaryMode": "Mode Résumé",
+    "mindmapMode": "Mode Carte Mentale",
+    "quizMode": "Mode Quiz",
+    "flashcardMode": "Mode Flashcard",
+    "processingModeDescription": "Choisissez le type de contenu à générer à partir de votre ebook."
+  },
+  "download": {
+    "title": "Télécharger",
+    "formats": {
+      "json": "Télécharger en JSON",
+      "csv": "Télécharger en CSV",
+      "html": "HTML Interactif",
+      "pdf": "PDF Imprimable",
+      "png": "Télécharger en PNG"
+    }
+  }
+}
