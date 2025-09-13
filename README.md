@@ -52,3 +52,69 @@ cd ebook-to-study-tools
 pnpm install
 # or
 npm install
+```
+
+Starting the Development Server
+```bash
+
+pnpm dev
+# or
+npm run dev
+```
+Access http://localhost:5173 to start using the application.
+
+📖 User Guide
+1. Configure AI Service
+On first use, you need to configure the AI service:
+
+Click the "Configuration" button in the upper right corner.
+
+Choose an AI service provider:
+
+Google Gemini (recommended): Requires a Gemini API Key.
+
+OpenAI GPT: Requires an OpenAI API Key and API URL.
+
+Enter the corresponding API Key.
+
+Select a model (optional, the default model is sufficient).
+
+2. Upload an eBook File
+Click the "Select EPUB or PDF file" button.
+
+Choose the ebook file to process.
+
+Supported formats: .epub, .pdf.
+
+3. Configure Processing Options
+Set the processing parameters in the configuration dialog:
+
+Processing Mode
+Mind Map Mode: Ideal for visual summaries and structure.
+
+Quiz Mode: Best for self-assessment and checking comprehension.
+
+Flashcard Mode: Perfect for memorizing key terms and concepts.
+
+4. Extract Chapters
+Click the "Extract Chapters" button.
+
+The system will automatically parse the file and extract the chapter structure.
+
+Once extraction is complete, the chapter list will be displayed.
+
+You can select the chapters you want to process (all are selected by default).
+
+5. Start Processing
+Confirm your chapter selection.
+
+Click the "Start Processing" button.
+
+The system will show the processing progress and the current step.
+
+The results will be displayed upon completion.
+
+6. View and Download Results
+Depending on the chosen processing mode, you can view different types of results and download them in various formats, including interactive HTML and printable PDF for quizzes and flashcards.
+
+This project is licensed under the MIT License. See the LICENSE file for details.
