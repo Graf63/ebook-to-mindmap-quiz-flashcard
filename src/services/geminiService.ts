@@ -7,6 +7,8 @@ import {
   getTestConnectionPrompt,
   getChapterMindMapPrompt,
   getMindMapArrowPrompt,
+  getQuizPrompt,
+  getFlashcardPrompt,
 } from './prompts'
 import type { MindElixirData } from 'mind-elixir'
 import { getLanguageInstruction, type SupportedLanguage } from './prompts/utils'
@@ -124,6 +126,37 @@ export class AIService {
       throw new Error(`全书总结生成失败: ${error instanceof Error ? error.message : '未知错误'}`)
     }
   }
+  
+  async generateChapterQuiz(title: string, content: string, outputLanguage: SupportedLanguage = 'en', customPrompt?: string): Promise<any> {
+    try {
+        let prompt = getQuizPrompt(title, content);
+
+        if (customPrompt && customPrompt.trim()) {
+            prompt += `\n\nAdditional instructions: ${customPrompt.trim()}`;
+        }
+
+        const quizJson = await this.generateContent(prompt, outputLanguage);
+        return JSON.parse(quizJson);
+    } catch (error) {
+        throw new Error(`Failed to generate quiz: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+  }
+
+  async generateChapterFlashcards(title: string, content: string, outputLanguage: SupportedLanguage = 'en', customPrompt?: string): Promise<any> {
+      try {
+          let prompt = getFlashcardPrompt(title, content);
+
+          if (customPrompt && customPrompt.trim()) {
+              prompt += `\n\nAdditional instructions: ${customPrompt.trim()}`;
+          }
+
+          const flashcardsJson = await this.generateContent(prompt, outputLanguage);
+          return JSON.parse(flashcardsJson);
+      } catch (error) {
+          throw new Error(`Failed to generate flashcards: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      }
+  }
+}
 
   async generateChapterMindMap(content: string, outputLanguage: SupportedLanguage = 'en', customPrompt?: string): Promise<MindElixirData> {
     try {
