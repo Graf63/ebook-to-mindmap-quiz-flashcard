@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { SupportedLanguage } from '../services/prompts/utils'
 
-// AI配置接口
+// AI
 interface AIConfig {
   provider: 'gemini' | 'openai'
   apiKey: string
@@ -11,9 +11,9 @@ interface AIConfig {
   temperature: number
 }
 
-// 处理选项接口
+// Processing options
 interface ProcessingOptions {
-  processingMode: 'summary' | 'mindmap' | 'combined-mindmap'
+  processingMode: 'summary' | 'mindmap' | 'quiz' | 'flashcard'
   bookType: 'fiction' | 'non-fiction'
   useSmartDetection: boolean
   skipNonEssentialChapters: boolean
@@ -21,9 +21,8 @@ interface ProcessingOptions {
   outputLanguage: SupportedLanguage
 }
 
-// 配置store状态接口
+// Config store state
 interface ConfigState {
-  // AI配置
   aiConfig: AIConfig
   setAiProvider: (provider: 'gemini' | 'openai') => void
   setApiKey: (apiKey: string) => void
@@ -31,9 +30,8 @@ interface ConfigState {
   setModel: (model: string) => void
   setTemperature: (temperature: number) => void
   
-  // 处理选项
   processingOptions: ProcessingOptions
-  setProcessingMode: (mode: 'summary' | 'mindmap' | 'combined-mindmap') => void
+  setProcessingMode: (mode: 'summary' | 'mindmap' | 'quiz' | 'flashcard') => void
   setBookType: (type: 'fiction' | 'non-fiction') => void
   setUseSmartDetection: (enabled: boolean) => void
   setSkipNonEssentialChapters: (enabled: boolean) => void
@@ -41,7 +39,7 @@ interface ConfigState {
   setOutputLanguage: (language: SupportedLanguage) => void
 }
 
-// 默认配置
+// Defaults
 const defaultAIConfig: AIConfig = {
   provider: 'gemini',
   apiKey: '',
@@ -59,51 +57,27 @@ const defaultProcessingOptions: ProcessingOptions = {
   outputLanguage: 'en'
 }
 
-// 创建配置store
+// Store creation
 export const useConfigStore = create<ConfigState>()(
   persist(
     (set) => ({
-      // AI配置
       aiConfig: defaultAIConfig,
-      setAiProvider: (provider) => set((state) => ({
-        aiConfig: { ...state.aiConfig, provider }
-      })),
-      setApiKey: (apiKey) => set((state) => ({
-        aiConfig: { ...state.aiConfig, apiKey }
-      })),
-      setApiUrl: (apiUrl) => set((state) => ({
-        aiConfig: { ...state.aiConfig, apiUrl }
-      })),
-      setModel: (model) => set((state) => ({
-        aiConfig: { ...state.aiConfig, model }
-      })),
-      setTemperature: (temperature) => set((state) => ({
-        aiConfig: { ...state.aiConfig, temperature }
-      })),
+      setAiProvider: (provider) => set((state) => ({ aiConfig: { ...state.aiConfig, provider } })),
+      setApiKey: (apiKey) => set((state) => ({ aiConfig: { ...state.aiConfig, apiKey } })),
+      setApiUrl: (apiUrl) => set((state) => ({ aiConfig: { ...state.aiConfig, apiUrl } })),
+      setModel: (model) => set((state) => ({ aiConfig: { ...state.aiConfig, model } })),
+      setTemperature: (temperature) => set((state) => ({ aiConfig: { ...state.aiConfig, temperature } })),
       
-      // 处理选项
       processingOptions: defaultProcessingOptions,
-      setProcessingMode: (processingMode) => set((state) => ({
-        processingOptions: { ...state.processingOptions, processingMode }
-      })),
-      setBookType: (bookType) => set((state) => ({
-        processingOptions: { ...state.processingOptions, bookType }
-      })),
-      setUseSmartDetection: (useSmartDetection) => set((state) => ({
-        processingOptions: { ...state.processingOptions, useSmartDetection }
-      })),
-      setSkipNonEssentialChapters: (skipNonEssentialChapters) => set((state) => ({
-        processingOptions: { ...state.processingOptions, skipNonEssentialChapters }
-      })),
-      setMaxSubChapterDepth: (maxSubChapterDepth) => set((state) => ({
-        processingOptions: { ...state.processingOptions, maxSubChapterDepth }
-      })),
-      setOutputLanguage: (outputLanguage) => set((state) => ({
-        processingOptions: { ...state.processingOptions, outputLanguage }
-      }))
+      setProcessingMode: (processingMode) => set((state) => ({ processingOptions: { ...state.processingOptions, processingMode } })),
+      setBookType: (bookType) => set((state) => ({ processingOptions: { ...state.processingOptions, bookType } })),
+      setUseSmartDetection: (useSmartDetection) => set((state) => ({ processingOptions: { ...state.processingOptions, useSmartDetection } })),
+      setSkipNonEssentialChapters: (skipNonEssentialChapters) => set((state) => ({ processingOptions: { ...state.processingOptions, skipNonEssentialChapters } })),
+      setMaxSubChapterDepth: (maxSubChapterDepth) => set((state) => ({ processingOptions: { ...state.processingOptions, maxSubChapterDepth } })),
+      setOutputLanguage: (outputLanguage) => set((state) => ({ processingOptions: { ...state.processingOptions, outputLanguage } }))
     }),
     {
-      name: 'ebook-mindmap-config', // localStorage中的键名
+      name: 'ebook-study-tools-config',
       partialize: (state) => ({
         aiConfig: state.aiConfig,
         processingOptions: state.processingOptions
@@ -112,6 +86,5 @@ export const useConfigStore = create<ConfigState>()(
   )
 )
 
-// 导出便捷的选择器
 export const useAIConfig = () => useConfigStore((state) => state.aiConfig)
 export const useProcessingOptions = () => useConfigStore((state) => state.processingOptions)
