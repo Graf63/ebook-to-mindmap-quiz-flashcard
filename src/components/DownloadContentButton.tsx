@@ -1,14 +1,13 @@
-import React from 'react';
 import { Download, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { downloadContent, downloadMindMap } from '../utils/downloadUtils';
 
-export const DownloadContentButton = ({ title, processingMode, data, mindElixirInstance }) => {
+export const DownloadContentButton = ({ title, processingMode, data, mindElixirInstance }: { title: any, processingMode: any, data: any, mindElixirInstance?: any }) => {
   const { t } = useTranslation();
 
-  const handleDownload = (format) => {
+  const handleDownload = (format: any) => {
     if (processingMode === 'mindmap') {
         downloadMindMap(mindElixirInstance, title, format);
     } else {

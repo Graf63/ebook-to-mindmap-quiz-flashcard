@@ -1,12 +1,7 @@
-import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DownloadContentButton } from './DownloadContentButton';
 
-export const FlashcardCard = ({ title, flashcardData }) => {
-    const handleDownload = (downloadTitle, format, data) => {
-        // Implement download logic or pass it down as a prop
-    };
-
+export const FlashcardCard = ({ title, flashcardData }: { title: any, flashcardData: any[] }) => {
     return (
     <Card>
         <CardHeader>
@@ -16,12 +11,11 @@ export const FlashcardCard = ({ title, flashcardData }) => {
                     title={title} 
                     processingMode="flashcard" 
                     data={flashcardData} 
-                    downloadHandler={handleDownload} 
                 />
             </CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {flashcardData.map((card, index) => (
+        {flashcardData.map((card: any, index: number) => (
             <div key={index} className="flashcard-container">
                 <div className="flashcard">
                     <div className="front p-4 border rounded shadow">

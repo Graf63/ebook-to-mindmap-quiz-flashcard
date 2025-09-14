@@ -1,17 +1,13 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { DownloadContentButton } from './DownloadContentButton';
 
-export const QuizCard = ({ title, quizData }) => {
-  const [showAnswers, setShowAnswers] = useState({});
+export const QuizCard = ({ title, quizData }: { title: any, quizData: any[] }) => {
+  const [showAnswers, setShowAnswers] = useState<any>({});
 
-  const toggleAnswer = (index) => {
-    setShowAnswers(prev => ({ ...prev, [index]: !prev[index] }));
-  };
-
-  const handleDownload = (downloadTitle, format, data) => {
-    // Implement download logic or pass it down as a prop
+  const toggleAnswer = (index: number) => {
+    setShowAnswers((prev: any) => ({ ...prev, [index]: !prev[index] }));
   };
 
   return (
@@ -23,16 +19,15 @@ export const QuizCard = ({ title, quizData }) => {
             title={title} 
             processingMode="quiz" 
             data={quizData} 
-            downloadHandler={handleDownload} 
           />
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {quizData.map((q, index) => (
+        {quizData.map((q: any, index: number) => (
           <div key={index} className="mb-4">
             <p><strong>{index + 1}. {q.question}</strong></p>
             <div className="ml-4">
-              {q.options.map((opt, i) => (
+              {q.options.map((opt: any, i: number) => (
                 <p key={i} className={i === q.correctAnswerIndex && showAnswers[index] ? 'text-green-600' : ''}>
                   {opt}
                 </p>
