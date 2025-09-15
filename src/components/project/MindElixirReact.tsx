@@ -3,6 +3,7 @@ import MindElixir from "mind-elixir"
 import "mind-elixir/style.css"
 import {
   forwardRef,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -33,14 +34,14 @@ const MindElixirReact = forwardRef<MindElixirReactRef, MindElixirReactProps>(
       instance: meInstance.current
     }))
 
-    const sanitizeNodeData = (nodeData: MindElixirData["nodeData"]) => {
+    const sanitizeNodeData = useCallback((nodeData: MindElixirData["nodeData"]) => {
       if (!nodeData) return
       if (nodeData.children) {
         for (const child of nodeData.children) {
           sanitizeNodeData(child)
         }
       }
-    }
+    }, [])
 
     // 计算数据的简单哈希值，用于比较数据是否变化
     useEffect(() => {
@@ -101,8 +102,10 @@ const MindElixirReact = forwardRef<MindElixirReactRef, MindElixirReactProps>(
           sanitizeNodeData(data.nodeData)
           meInstance.current.init(data)
           meInstance.current.toCenter()
-          meInstance.current.scale(0.5)          
-          fitPage && meInstance.current.scaleFit()
+          meInstance.current.scale(0.5)
+          if (fitPage) {
+            meInstance.current.scaleFit()
+          }
           meInstance.current.map.style.opacity = "1"
         }
 
@@ -120,7 +123,7 @@ const MindElixirReact = forwardRef<MindElixirReactRef, MindElixirReactProps>(
       return () => {
         cleanup?.()
       }
-    }, [options, plugins, initScale])
+    }, [options, plugins, initScale, data, fitPage, sanitizeNodeData])
 
     // 使用dataHash作为依赖项，只有当数据真正变化时才刷新
     useEffect(() => {
@@ -130,9 +133,11 @@ const MindElixirReact = forwardRef<MindElixirReactRef, MindElixirReactProps>(
       sanitizeNodeData(data.nodeData)
       meInstance.current.refresh(data)
       meInstance.current.toCenter()
-      fitPage && meInstance.current.scaleFit()
+      if (fitPage) {
+        meInstance.current.scaleFit()
+      }
       meInstance.current.map.style.opacity = "1"
-    }, [dataHash, fitPage])
+    }, [dataHash, fitPage, data, sanitizeNodeData])
 
     return (
       <div

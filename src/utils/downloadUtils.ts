@@ -4,10 +4,10 @@ import { toast } from 'sonner';
 import { downloadMethodList } from '@mind-elixir/export-mindmap';
 import type { MindElixirInstance } from 'mind-elixir';
 
-const generateQuizHTML = (title, quizData) => {
+const generateQuizHTML = (title: any, quizData: any[]) => {
     let questionsHTML = '';
-    quizData.forEach((q, index) => {
-      const optionsHTML = q.options.map((opt, i) => `
+    quizData.forEach((q: any, index: number) => {
+      const optionsHTML = q.options.map((opt: any, i: number) => `
         <div class="option ${i === q.correctAnswerIndex ? 'correct' : ''}">${opt}</div>
       `).join('');
   
@@ -46,9 +46,9 @@ const generateQuizHTML = (title, quizData) => {
     `;
   };
   
-  const generateFlashcardHTML = (title, flashcardData) => {
+  const generateFlashcardHTML = (title: any, flashcardData: any[]) => {
       let cardsHTML = '';
-      flashcardData.forEach((card) => {
+      flashcardData.forEach((card: any) => {
           cardsHTML += `
         <div class="flashcard" onclick="this.classList.toggle('flipped')">
           <div class="front">
@@ -83,20 +83,20 @@ const generateQuizHTML = (title, quizData) => {
     `;
   };
 
-export const downloadMindMap = async (instance, title, format) => {
+export const downloadMindMap = async (instance: MindElixirInstance, title: any, format: any) => {
     try {
         const method = downloadMethodList.find((item) => item.type === format);
         if (!method) {
             throw new Error(`Unsupported format: ${format}`);
         }
-        await method.download(instance, title);
+        await method.download(instance);
         toast.success(`${title} has been successfully exported as ${format}.`);
     } catch (error) {
         toast.error(`Export failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
 };
 
-export const downloadContent = (title, format, data, processingMode) => {
+export const downloadContent = (title: any, format: any, data: any[], processingMode: any) => {
     const filename = `${title}.${format.toLowerCase()}`;
     let content = '';
     let mimeType = '';
@@ -126,7 +126,7 @@ export const downloadContent = (title, format, data, processingMode) => {
         mimeType = 'application/json';
     } else if (format === 'CSV') {
         const headers = Object.keys(data[0]).join(',');
-        const rows = data.map(item => Object.values(item).map(val => `"${val}"`).join(',')).join('\n');
+        const rows = data.map((item: any) => Object.values(item).map(val => `"${val}"`).join(',')).join('\n');
         content = `${headers}\n${rows}`;
         mimeType = 'text/csv';
     }

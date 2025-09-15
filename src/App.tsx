@@ -1,19 +1,18 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
-import { Upload, BookOpen, Brain, FileText, Loader2, Network, Trash2, List, ChevronUp, HelpCircle, PencilLine } from 'lucide-react';
+import { Upload, BookOpen, Brain, FileText, Loader2, List, ChevronUp } from 'lucide-react';
 import { EpubProcessor, type ChapterData } from './services/epubProcessor';
 import { PdfProcessor } from './services/pdfProcessor';
 import { AIService } from './services/geminiService';
-import { CacheService } from './services/cacheService';
 import { ConfigDialog } from './components/project/ConfigDialog';
-import type { MindElixirData, MindElixirInstance } from 'mind-elixir';
+import type { MindElixirData } from 'mind-elixir';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
 import { MarkdownCard } from './components/MarkdownCard';
 import { MindMapCard } from './components/MindMapCard';
@@ -22,7 +21,7 @@ import { FlashcardCard } from './components/FlashcardCard';
 import { toast } from 'sonner';
 import { Toaster } from '@/components/ui/sonner';
 import { scrollToTop, openInMindElixir } from './utils';
-import { downloadMindMap, downloadContent } from './utils/downloadUtils';
+import { downloadMindMap } from './utils/downloadUtils';
 import { useAIConfig, useProcessingOptions, useConfigStore } from './stores/configStore';
 
 // --- Interfaces ---
@@ -56,8 +55,6 @@ interface BookOutput<T> {
   chapters: T[];
 }
 
-const cacheService = new CacheService();
-
 function App() {
   const { t } = useTranslation();
   const [file, setFile] = useState<File | null>(null);
@@ -74,8 +71,6 @@ function App() {
   const [customPrompt, setCustomPrompt] = useState('');
   const [showBackToTop, setShowBackToTop] = useState(false);
   
-  const mindElixirInstanceRef = useRef<MindElixirInstance | null>(null);
-
   const aiConfig = useAIConfig();
   const processingOptions = useProcessingOptions();
   const { apiKey } = aiConfig;
@@ -170,23 +165,27 @@ function App() {
       for (const [index, chapter] of chaptersToProcess.entries()) {
         setCurrentStep(`${t('progress.processingChapter', { current: index + 1, total: chaptersToProcess.length, title: chapter.title })}`);
         
-        let processedChapter: Chapter = { ...chapter, processed: true };
+        const processedChapter: Chapter = { ...chapter, processed: true };
 
         switch (processingMode) {
-          case 'summary':
+          case 'summary': {
             processedChapter.summary = await aiService.summarizeChapter(chapter.title, chapter.content, bookType, outputLanguage, customPrompt);
             break;
-          case 'mindmap':
+          }
+          case 'mindmap': {
             processedChapter.mindMap = await aiService.generateChapterMindMap(chapter.content, outputLanguage, customPrompt);
             break;
-          case 'quiz':
+          }
+          case 'quiz': {
             const quizData = await aiService.generateChapterQuiz(chapter.title, chapter.content, outputLanguage, customPrompt);
             processedChapter.quiz = quizData.questions;
             break;
-          case 'flashcard':
+          }
+          case 'flashcard': {
             const flashcardData = await aiService.generateChapterFlashcards(chapter.title, chapter.content, outputLanguage, customPrompt);
             processedChapter.flashcards = flashcardData.flashcards;
             break;
+          }
         }
         processedChapters.push(processedChapter);
         setProgress( (index + 1) / chaptersToProcess.length * 100);
@@ -225,16 +224,18 @@ function App() {
                 <CardHeader><CardTitle>{t('results.summaryTitle', { title: bookResult.title })}</CardTitle></CardHeader>
                 <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {bookResult.chapters.map((chapter, index) => (
-                        <MindMapCard 
-                            key={chapter.id} 
-                            id={chapter.id}
-                            title={chapter.title} 
-                            content={chapter.content} 
-                            mindMapData={chapter.mindMap} 
-                            index={index}
-                            onDownloadMindMap={(instance, title, format) => downloadMindMap(instance, title, format)}
-                            onOpenInMindElixir={openInMindElixir}
-                        />
+                        chapter.mindMap ? (
+                            <MindMapCard
+                                key={chapter.id}
+                                id={chapter.id}
+                                title={chapter.title}
+                                content={chapter.content}
+                                mindMapData={chapter.mindMap}
+                                index={index}
+                                onDownloadMindMap={(instance, title, format) => downloadMindMap(instance, title, format)}
+                                onOpenInMindElixir={openInMindElixir}
+                            />
+                        ) : null
                     ))}
                 </CardContent>
             </Card>

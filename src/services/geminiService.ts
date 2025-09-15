@@ -170,12 +170,12 @@ export class AIService {
       
       try {
         return JSON.parse(mindMapJson.trim())
-      } catch (parseError) {
+      } catch {
         const jsonMatch = mindMapJson.match(/```(?:json)?\s*([\s\S]*?)```/)
         if (jsonMatch && jsonMatch[1]) {
           try {
             return JSON.parse(jsonMatch[1].trim())
-          } catch (extractError) {
+          } catch {
             throw new Error('AI returned incorrectly formatted mind map data.')
           }
         }
@@ -199,12 +199,12 @@ export class AIService {
 
       try {
         return JSON.parse(arrowsJson.trim())
-      } catch (parseError) {
+      } catch {
         const jsonMatch = arrowsJson.match(/```(?:json)?\s*([\s\S]*?)```/)
         if (jsonMatch && jsonMatch[1]) {
           try {
             return JSON.parse(jsonMatch[1].trim())
-          } catch (extractError) {
+          } catch {
             throw new Error('AI returned incorrectly formatted arrow data.')
           }
         }
@@ -235,12 +235,12 @@ export class AIService {
       
       try {
         return JSON.parse(mindMapJson.trim())
-      } catch (parseError) {
+      } catch {
         const jsonMatch = mindMapJson.match(/```(?:json)?\s*([\s\S]*?)```/)
         if (jsonMatch && jsonMatch[1]) {
           try {
             return JSON.parse(jsonMatch[1].trim())
-          } catch (extractError) {
+          } catch {
             throw new Error('AI returned incorrectly formatted mind map data.')
           }
         }
@@ -301,7 +301,7 @@ export class AIService {
     try {
       const text = await this.generateContent(getTestConnectionPrompt())
       return text.includes('Connection successful') || text.includes('successful')
-    } catch (error) {
+    } catch {
       return false
     }
   }
